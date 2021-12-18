@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
 
         navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
             if (nd.id == R.id.loginFragment || nd.id ==R.id.signIn_fragment) {
