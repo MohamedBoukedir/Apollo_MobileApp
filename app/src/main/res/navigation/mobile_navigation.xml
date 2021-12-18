@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.geto.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_projet_detaills"
+            app:destination="@id/projet_detaills" />
+        <action
+            android:id="@+id/action_navigation_home_to_addProjet"
+            app:destination="@id/addProjet" />
+    </fragment>
+    <fragment
+        android:id="@+id/projet_detaills"
+        android:name="com.example.geto.ui.fragments.Projet_detaills"
+        android:label="fragment_projet_detaills"
+        tools:layout="@layout/fragment_projet_detaills" >
+        <action
+            android:id="@+id/action_projet_detaills_to_addparticipant"
+            app:destination="@id/addparticipant" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.geto.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/addProjet"
+        android:name="com.example.geto.ui.fragments.AddProjet"
+        android:label="fragment_add_projet"
+        tools:layout="@layout/fragment_add_projet" >
+        <action
+            android:id="@+id/action_addProjet_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/addparticipant"
+        android:name="com.example.geto.ui.fragments.Addparticipant"
+        android:label="fragment_addparticipant"
+        tools:layout="@layout/fragment_addparticipant" >
+        <action
+            android:id="@+id/action_addparticipant_to_projet_detaills"
+            app:destination="@id/projet_detaills" />
+    </fragment>
+
+
+</navigation>
