@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -23,6 +24,7 @@ class Projet_detaills : Fragment() {
         val linearLayout=view.findViewById<LinearLayout>(R.id.linear_layout)
         val b = view.findViewById<ImageButton>(R.id.add_task)
         val task=view.findViewById<EditText>(R.id.task2)
+
         // populate the fragment
         view.findViewById<TextView>(R.id.project_title).text=args.projet.title
         view.findViewById<TextView>(R.id.description2).text=args.projet.description

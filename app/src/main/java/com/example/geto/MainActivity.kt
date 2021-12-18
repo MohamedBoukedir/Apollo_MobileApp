@@ -1,6 +1,7 @@
 package com.example.geto
 
 
+import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)
+
+
 
         navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
             if (nd.id == R.id.loginFragment || nd.id ==R.id.signIn_fragment) {

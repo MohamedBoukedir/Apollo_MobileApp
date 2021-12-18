@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.geto.R
@@ -34,6 +35,7 @@ class AddProjet : Fragment() {
             } else Toast.makeText(this.context, "The name cannot be empty!", Toast.LENGTH_LONG)
                 .show()
         })
+
         return(view)
 
     }
