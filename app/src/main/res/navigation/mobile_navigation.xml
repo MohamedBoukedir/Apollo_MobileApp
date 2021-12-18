@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/loginFragment">
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.geto.ui.home.HomeFragment"
@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_projet_detaills_to_addparticipant"
             app:destination="@id/addparticipant" />
+        <argument
+            android:name="projet"
+            app:argType="com.example.geto.data.model.Project" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -46,6 +49,27 @@
         <action
             android:id="@+id/action_addparticipant_to_projet_detaills"
             app:destination="@id/projet_detaills" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.geto.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_loginFragment_to_signIn"
+            app:destination="@id/signIn_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signIn_fragment"
+        android:name="com.example.geto.ui.Signin.SignIn"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signIn_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
 
