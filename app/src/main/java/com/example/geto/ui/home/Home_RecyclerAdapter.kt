@@ -2,6 +2,7 @@ package com.example.geto.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ class Home_RecyclerAdapter(
 ):
     RecyclerView.Adapter<Home_RecyclerAdapter.ViewHolder>()
 {
+
 // 1. Méthode redéfinie qui a besoin du nombre d’éléments de données à afficher
     override fun getItemCount() = Projects.size
 // 2. Méthode redéfinie qui retourne un ViewHolder et fait une association avec le fichier layout
@@ -38,12 +40,12 @@ class Home_RecyclerAdapter(
                 it.text = project.description
             }
         }
-    holder.itemView.setOnClickListener { view ->
-        val bundle = Bundle()
-        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_projet_detaills, bundle)
+         holder.itemView.setOnClickListener { view ->
+             val action =HomeFragmentDirections.actionNavigationHomeToProjetDetaills(Projects[position])
+             Navigation.findNavController(view).navigate(action)
     }
 
-}
+   }
     // 0. Le ViewHolder
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.projet_title)
