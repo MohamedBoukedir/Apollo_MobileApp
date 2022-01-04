@@ -21,7 +21,17 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 
 import com.example.geto.R
+import com.example.geto.data.Rest.ApiInterface
+import com.example.geto.data.Rest.RetrofitInstance
+import com.example.geto.data.model.SignInBody
+import com.example.geto.data.model.User
+import com.example.geto.ui.home.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginFragment : Fragment() {
 
@@ -44,85 +54,40 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
 
+
+        loginViewModel=ViewModelProvider(this).get(LoginViewModel::class.java)
         val usernameEditText = view.findViewById<EditText>(R.id.username)
         val passwordEditText = view.findViewById<EditText>(R.id.password)
         val loginButton = view.findViewById<Button>(R.id.login)
         val loadingProgressBar = view.findViewById<ProgressBar>(R.id.loading)
 
-        loginViewModel.loginFormState.observe(viewLifecycleOwner,
-            Observer { loginFormState ->
-                if (loginFormState == null) {
-                    return@Observer
-                }
-                loginButton.isEnabled = loginFormState.isDataValid
-                loginFormState.usernameError?.let {
-                    usernameEditText.error = getString(it)
-                }
-                loginFormState.passwordError?.let {
-                    passwordEditText.error = getString(it)
-                }
-            })
-
-        loginViewModel.loginResult.observe(viewLifecycleOwner,
-            Observer { loginResult ->
-                loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
-                loginResult.error?.let {
-                    showLoginFailed(it)
-                }
-                loginResult.success?.let {
-                    updateUiWithUser(it)
-                }
-            })
-
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                loginViewModel.loginDataChanged(
-                    usernameEditText.text.toString(),
-                    passwordEditText.text.toString()
-                )
-            }
-        }
-        usernameEditText.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                loginViewModel.login(
-                    usernameEditText.text.toString(),
-                    passwordEditText.text.toString()
-                )
-            }
-            false
-        }
-
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(
-                usernameEditText.text.toString(),
-                passwordEditText.text.toString()
-            )
-            val bundle = Bundle()
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_navigation_home, bundle)
+            var username= usernameEditText.text.toString()
+            var password=passwordEditText.text.toString()
+            var user:User
+            val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+            val signInInfo = SignInBody(username, password)
+
+            retIn.login(signInInfo).enqueue(object : Callback<ResponseBody> {
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                }
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.code() == 200) {
+                        var gson = Gson()
+                        user = gson?.fromJson(response.body()?.string(), User::class.java)
+                        loadingProgressBar.visibility = View.INVISIBLE
+                        val bundle = Bundle()
+                        findNavController(view).navigate(R.id.action_loginFragment_to_navigation_home, bundle)
+                    } else {
+                    }
+                }
+            })
+
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome) + model.displayName
-        // TODO : initiate successful logged in experience
-        val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
-    }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
