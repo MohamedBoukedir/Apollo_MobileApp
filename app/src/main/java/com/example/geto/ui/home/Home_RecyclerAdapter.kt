@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +40,14 @@ class Home_RecyclerAdapter(
             description?.let {
                 it.text = project.description
             }
+            image?.let{
+                if(position%4==0)it.setImageResource(R.drawable.image6)
+                else if(position%4==1) it.setImageResource(R.drawable.image6)
+                else if(position%4==2) it.setImageResource(R.drawable.image7)
+                else if(position%4==3) it.setImageResource(R.drawable.image8)
+
+
+            }
         }
          holder.itemView.setOnClickListener { view ->
              val action =HomeFragmentDirections.actionNavigationHomeToProjetDetaills(Projects[position])
@@ -50,6 +59,7 @@ class Home_RecyclerAdapter(
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.projet_title)
         val description = itemView.findViewById<TextView>(R.id.description)
+        val image=itemView.findViewById<ImageView>(R.id.projectImage)
     }
 }
 

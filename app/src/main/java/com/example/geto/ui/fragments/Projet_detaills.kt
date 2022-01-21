@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -26,14 +27,15 @@ class Projet_detaills : Fragment() {
         val task=view.findViewById<EditText>(R.id.task2)
 
         // populate the fragment
-        view.findViewById<TextView>(R.id.project_title).text=args.projet.title
-        view.findViewById<TextView>(R.id.description2).text=args.projet.description
+
         val tasks=args.projet.tasks
 
         for(task in tasks){
             val checkBox = CheckBox(this.context)
-            checkBox.text = task
+            checkBox.text = task.description
+            checkBox.setBackgroundResource(R.drawable.background)
 
+            checkBox.setPadding(2,2,2,2)
             linearLayout.addView(checkBox)
         }
         val add_participant= view.findViewById<Button>(R.id.add_participant)
@@ -46,7 +48,8 @@ class Projet_detaills : Fragment() {
             if (name.isNotEmpty()) {
                 val checkBox = CheckBox(this.context)
                 checkBox.text = name
-
+                checkBox.setBackgroundResource(R.drawable.background)
+                checkBox.setPadding(2,2,2,2)
                 linearLayout.addView(checkBox)
                 task.setText("")
 

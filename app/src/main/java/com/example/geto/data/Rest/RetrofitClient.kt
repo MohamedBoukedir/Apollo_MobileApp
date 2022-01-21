@@ -1,13 +1,19 @@
 package com.example.geto.data.Rest
 
+import androidx.lifecycle.LiveData
+import com.example.geto.WEB_SERVICE_URL
+import com.example.geto.data.model.Project
 import com.example.geto.data.model.SignInBody
 import com.example.geto.data.model.User
+import com.example.geto.data.requestBody.NewProject
+import com.example.geto.data.requestBody.UserId
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -17,14 +23,22 @@ interface ApiInterface {
     fun login(@Body user:SignInBody): retrofit2.Call<ResponseBody>
 
     @Headers("Content-Type:application/json")
-    @POST("users")
+    @POST("/register")
     fun registerUser(
-        @Body info: User
+        @Body user: User
     ): retrofit2.Call<ResponseBody>
+
+    @Headers("Content-Type:application/json")
+    @POST("/projects/add")
+    fun add_project(@Body nproject: NewProject): retrofit2.Call<ResponseBody>
+
+    @Headers("Content-Type:application/json")
+    @POST("/projects/getProjectes") //projects/getProjectes
+    fun get_projects(@Body userid: UserId): retrofit2.Call<List<Project>>
 }
 class RetrofitInstance {
     companion object {
-        val BASE_URL: String = "http://10.10.1.1:3000/"
+        val BASE_URL=WEB_SERVICE_URL
 
         val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY

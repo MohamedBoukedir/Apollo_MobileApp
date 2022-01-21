@@ -1,37 +1,30 @@
 package com.example.geto.ui.Signin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.geto.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SignIn.newInstance] factory method to
- * create an instance of this fragment.
- */
+import com.example.geto.data.Rest.ApiInterface
+import com.example.geto.data.Rest.RetrofitInstance
+import com.example.geto.data.model.SignInBody
+import com.example.geto.data.model.User
+import com.example.geto.ui.login.LoginFragmentDirections
+import com.google.gson.Gson
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 class SignIn : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,10 +32,33 @@ class SignIn : Fragment() {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_sign_in, container, false)
         val btn_signin=view.findViewById<Button>(R.id.btn_signIn)
+        val name=view.findViewById<EditText>(R.id.user_name)
+        val password=view.findViewById<EditText>(R.id.user_password)
+        val email=view.findViewById<EditText>(R.id.email)
         btn_signin.setOnClickListener {
             // to do implement authentication
-            val bundle = Bundle()
-            Navigation.findNavController(view).navigate(R.id.action_signIn_to_loginFragment, bundle)
+            val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+            val registerInInfo = User(name.text.toString(),email.text.toString(),"")
+            retIn.registerUser(registerInInfo).enqueue(object : Callback<ResponseBody> {
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    val appContext = context?.applicationContext ?: return
+                    Toast.makeText(appContext,"something wrong", Toast.LENGTH_LONG).show()
+                }
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.code() == 200) {
+                        val bundle = Bundle()
+                        Navigation.findNavController(view).navigate(R.id.action_signIn_to_loginFragment, bundle)
+                        val appContext = context?.applicationContext ?: return
+                        Toast.makeText(appContext,"welcome ", Toast.LENGTH_LONG).show()
+                    } else if(response.code()==409) {
+                        val appContext = context?.applicationContext ?: return
+                        Toast.makeText(appContext,"already registered ", Toast.LENGTH_LONG).show()
+                    }else{
+                        val appContext = context?.applicationContext ?: return
+                        Toast.makeText(appContext,"something wrong ", Toast.LENGTH_LONG).show()
+                    }
+                }
+            })
         }
         return view
 
@@ -50,23 +66,5 @@ class SignIn : Fragment() {
 
 
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignIn.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignIn().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

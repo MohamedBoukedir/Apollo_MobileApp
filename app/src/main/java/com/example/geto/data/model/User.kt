@@ -7,9 +7,7 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class User(
-    val name:String,
-    val password:String,
-    val projects :List<Project>,
-    val email:String,
-    val token :String,
+        val name:String,
+        val email:String,
+        val token :String,
 ) :Parcelable

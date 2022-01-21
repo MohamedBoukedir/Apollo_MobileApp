@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Geto</string>
+    <string name="app_name">Apollo</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -12,7 +12,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="Tasks"><u>Tasks       :</u></string>
+    <string name="participant"><u>Participant       :</u></string>
+    <string name="deadline"><u>Dead Line      :</u></string>
     <string name="large_text">
+
+
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."

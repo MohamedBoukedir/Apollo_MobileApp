@@ -1,32 +1,24 @@
 package com.example.geto.ui.login
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 
 import com.example.geto.R
 import com.example.geto.data.Rest.ApiInterface
 import com.example.geto.data.Rest.RetrofitInstance
 import com.example.geto.data.model.SignInBody
 import com.example.geto.data.model.User
-import com.example.geto.ui.home.HomeViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.geto.guser
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -72,15 +64,24 @@ class LoginFragment : Fragment() {
 
             retIn.login(signInInfo).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    loadingProgressBar.visibility = View.INVISIBLE
+                    val appContext = context?.applicationContext ?: return
+                    Toast.makeText(appContext,"wrong email or password ", Toast.LENGTH_LONG).show()
+
                 }
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.code() == 200) {
                         var gson = Gson()
                         user = gson?.fromJson(response.body()?.string(), User::class.java)
                         loadingProgressBar.visibility = View.INVISIBLE
-                        val bundle = Bundle()
-                        findNavController(view).navigate(R.id.action_loginFragment_to_navigation_home, bundle)
+                        guser=user
+                        Log.d("jj",guser.toString())
+                        val action = LoginFragmentDirections.actionLoginFragmentToNavigationHome()
+                        Navigation.findNavController(view).navigate(action)
                     } else {
+                        loadingProgressBar.visibility = View.INVISIBLE
+                        val appContext = context?.applicationContext ?: return
+                        Toast.makeText(appContext,"wrong email or password ", Toast.LENGTH_LONG).show()
                     }
                 }
             })
@@ -89,8 +90,5 @@ class LoginFragment : Fragment() {
     }
 
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
-    }
+
 }
