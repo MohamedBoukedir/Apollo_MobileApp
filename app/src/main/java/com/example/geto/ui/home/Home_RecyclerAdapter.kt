@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -41,12 +42,29 @@ class Home_RecyclerAdapter(
                 it.text = project.description
             }
             image?.let{
-                if(position%4==0)it.setImageResource(R.drawable.image6)
-                else if(position%4==1) it.setImageResource(R.drawable.image6)
-                else if(position%4==2) it.setImageResource(R.drawable.image7)
-                else if(position%4==3) it.setImageResource(R.drawable.image8)
-
-
+                if(position%8==0)it.setImageResource(R.drawable.image6)
+                else if(position%8==1) it.setImageResource(R.drawable.image7)
+                else if(position%8==2) it.setImageResource(R.drawable.image8)
+                else if(position%8==3) it.setImageResource(R.drawable.image9)
+                else if(position%8==4) it.setImageResource(R.drawable.image10)
+                else if(position%8==5) it.setImageResource(R.drawable.image11)
+                else if(position%8==6) it.setImageResource(R.drawable.image12)
+                else if(position%8==7) it.setImageResource(R.drawable.imge5)
+            }
+            nbrTasks?.let{
+                it.text=project.tasks.size.toString() + " tasks"
+            }
+            nbrParticipants?.let{
+                it.text=project.users_id.size.toString()+" Participants"
+            }
+            progress?.let{
+                var level =0
+                var n=0
+                for(task in project.tasks){
+                    n++
+                    if(task.finished) level++
+                }
+                progress.progress=((level*100)/n)
             }
         }
          holder.itemView.setOnClickListener { view ->
@@ -60,6 +78,9 @@ class Home_RecyclerAdapter(
         val title = itemView.findViewById<TextView>(R.id.projet_title)
         val description = itemView.findViewById<TextView>(R.id.description)
         val image=itemView.findViewById<ImageView>(R.id.projectImage)
+        val nbrTasks=itemView.findViewById<TextView>(R.id.nbr_tasks)
+        val nbrParticipants=itemView.findViewById<TextView>(R.id.nbr_participent)
+        val progress=itemView.findViewById<ProgressBar>(R.id.progressBar2)
     }
 }
 

@@ -38,7 +38,7 @@ class SignIn : Fragment() {
         btn_signin.setOnClickListener {
             // to do implement authentication
             val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-            val registerInInfo = User(name.text.toString(),email.text.toString(),"")
+            val registerInInfo = User(name.text.toString(),email.text.toString(),password.text.toString(),"")
             retIn.registerUser(registerInInfo).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     val appContext = context?.applicationContext ?: return

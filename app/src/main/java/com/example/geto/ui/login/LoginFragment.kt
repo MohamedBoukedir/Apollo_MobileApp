@@ -16,6 +16,7 @@ import androidx.navigation.Navigation
 import com.example.geto.R
 import com.example.geto.data.Rest.ApiInterface
 import com.example.geto.data.Rest.RetrofitInstance
+import com.example.geto.data.Rest.SessionManager
 import com.example.geto.data.model.SignInBody
 import com.example.geto.data.model.User
 import com.example.geto.guser
@@ -28,6 +29,7 @@ import retrofit2.Response
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +77,6 @@ class LoginFragment : Fragment() {
                         user = gson?.fromJson(response.body()?.string(), User::class.java)
                         loadingProgressBar.visibility = View.INVISIBLE
                         guser=user
-                        Log.d("jj",guser.toString())
                         val action = LoginFragmentDirections.actionLoginFragmentToNavigationHome()
                         Navigation.findNavController(view).navigate(action)
                     } else {

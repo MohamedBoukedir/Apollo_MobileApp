@@ -1,21 +1,19 @@
 package com.example.geto.data.Rest
 
+import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import com.example.geto.WEB_SERVICE_URL
-import com.example.geto.data.model.Project
-import com.example.geto.data.model.SignInBody
-import com.example.geto.data.model.User
+import com.example.geto.data.model.*
 import com.example.geto.data.requestBody.NewProject
 import com.example.geto.data.requestBody.UserId
+import com.example.geto.data.requestBody.addPart_Body
+import com.example.geto.guser
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiInterface {
     @Headers("Content-Type:application/json")
@@ -35,6 +33,29 @@ interface ApiInterface {
     @Headers("Content-Type:application/json")
     @POST("/projects/getProjectes") //projects/getProjectes
     fun get_projects(@Body userid: UserId): retrofit2.Call<List<Project>>
+
+    @Headers("Content-Type:application/json")
+    @POST("/tasks/add") //projects/getProjectes
+    fun add_task(@Header("Authorization") token: String,@Body task: Task): retrofit2.Call<Task>
+
+    @Headers("Content-Type:application/json")
+    @PUT("/tasks/update") //projects/getProjectes
+    fun update_task(@Header("Authorization") token: String,@Body task: Task): retrofit2.Call<ResponseBody>
+
+    @Headers("Content-Type:application/json")
+    @PUT("/users/addParticipant")
+    fun add_participant(@Header("Authorization") token:String,@Body addpartBody: addPart_Body) : retrofit2.Call<ResponseBody>
+
+    @Headers("Content-Type:application/json")
+    @POST("/Notes/add")
+    fun add_sharedNote(@Header("Authorization") token:String,@Body note: SharedNote) : retrofit2.Call<ResponseBody>
+
+    @Headers("Content-Type:application/json")
+    @POST("/Notes/getNotes")
+    fun get_sharedNote(@Header("Authorization") token:String,@Body note: SharedNote) : retrofit2.Call<List<SharedNote>>
+
+
+
 }
 class RetrofitInstance {
     companion object {

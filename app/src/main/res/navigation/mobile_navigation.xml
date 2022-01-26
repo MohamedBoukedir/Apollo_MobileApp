@@ -27,6 +27,9 @@
         <argument
             android:name="projet"
             app:argType="com.example.geto.data.model.Project" />
+        <action
+            android:id="@+id/action_projet_detaills_to_taskDetaills"
+            app:destination="@id/taskDetaills" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -49,6 +52,9 @@
         <action
             android:id="@+id/action_addparticipant_to_projet_detaills"
             app:destination="@id/projet_detaills" />
+        <argument
+            android:name="project"
+            app:argType="com.example.geto.data.model.Project" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -70,6 +76,18 @@
         <action
             android:id="@+id/action_signIn_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskDetaills"
+        android:name="com.example.geto.ui.fragments.taskDetaills"
+        android:label="fragment_task_detaills"
+        tools:layout="@layout/fragment_task_detaills" >
+        <action
+            android:id="@+id/action_taskDetaills_to_projet_detaills"
+            app:destination="@id/projet_detaills" />
+        <argument
+            android:name="task"
+            app:argType="com.example.geto.data.model.Task" />
     </fragment>
 
 

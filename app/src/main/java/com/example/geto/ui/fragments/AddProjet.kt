@@ -43,7 +43,7 @@ class AddProjet : Fragment() {
                 linearLayout.addView(checkBox)
                 taskDescription.setText("")
 
-                val nTask=Task(description,false,"")
+                val nTask=Task("",description,false,"")
                 tasks.add(nTask)
             } else Toast.makeText(this.context, "The description cannot be empty!", Toast.LENGTH_LONG)
                     .show()
@@ -53,7 +53,9 @@ class AddProjet : Fragment() {
             val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
             val title=view.findViewById<TextView>(R.id.title_project)
             val description=view.findViewById<TextView>(R.id.add_project_description)
-            val project =Project(title.text.toString(),description.text.toString(),guser.email,"0", ArrayList())
+            val users=ArrayList<String>()
+            users.add(guser.email)
+            val project =Project(title.text.toString(),description.text.toString(), users,"0", ArrayList())
             val newprojectBody=NewProject(tasks,project,guser.token)
             retIn.add_project(newprojectBody).enqueue(object : Callback<ResponseBody> {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

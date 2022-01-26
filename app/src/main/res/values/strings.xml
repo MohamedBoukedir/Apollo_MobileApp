@@ -13,7 +13,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="Tasks"><u>Tasks       :</u></string>
-    <string name="participant"><u>Participant       :</u></string>
+    <string name="participant"><u>Participants       :</u></string>
     <string name="deadline"><u>Dead Line      :</u></string>
     <string name="large_text">
 

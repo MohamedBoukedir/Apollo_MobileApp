@@ -5,7 +5,8 @@ import kotlinx.android.parcel.Parcelize
 import java.io.FileDescriptor
 @Parcelize
 data class Task(
+        var id:String,
         val description: String,
-        val finished :Boolean,
+        var finished :Boolean,
         val project_id:String,
 ) : Parcelable

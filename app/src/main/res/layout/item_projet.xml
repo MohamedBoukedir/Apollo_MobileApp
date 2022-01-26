@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_alignParentTop="false"
     android:layout_margin="2dp"
-    android:background="@drawable/project_bakcground"
+
     android:clickable="true"
     android:focusable="true"
     android:padding="16dp">
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="15dp"
-
+        android:background="@drawable/project_bakcground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,9 +34,9 @@
                 android:id="@+id/progressBar2"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:max="100"
                 android:layout_height="40sp"
-                android:background="#0E0E0E" />
+                android:background="#ECE4E4"
+                android:max="100" />
 
             <ImageView
                 android:id="@+id/projectImage"
@@ -79,6 +79,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -128,24 +133,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-black"
-                            android:text="@string/deadline"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/dead_line"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="15/5/2022" />
-                    </LinearLayout>
+                        android:orientation="horizontal"/>
 
                 </LinearLayout>
 
