@@ -64,7 +64,8 @@ class Home_RecyclerAdapter(
                     n++
                     if(task.finished) level++
                 }
-                progress.progress=((level*100)/n)
+                if(n!=0) progress.progress=((level*100)/n)
+                else progress.progress=0
             }
         }
          holder.itemView.setOnClickListener { view ->
